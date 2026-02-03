@@ -1,0 +1,15 @@
+services:
+  tcp_lab:
+    build: .
+    container_name: tcp
+    volumes:
+      - .:/workspace
+    ports:
+      - "1234:1234"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    security_opt:
+      - seccomp:unconfined
+    command: >
+      bash -c "find . -name '*.c' | entr -rn sh -c 'gcc -g -o xtcp main.c && echo \"[+] Compiling. Initializing GDB...\" && gdbserver 0.0.0.0:1234 ./xtcp'"

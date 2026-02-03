@@ -1,0 +1,3 @@
+Soon ...
+
+iptables -A OUTPUT -p tcp --tcp-flags RST RST --sport 8080 -j DROP

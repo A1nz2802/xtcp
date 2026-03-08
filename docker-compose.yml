@@ -12,4 +12,4 @@ services:
     security_opt:
       - seccomp:unconfined
     command: >
-      bash -c "find . -name '*.c' | entr -rn sh -c 'gcc -g -o xtcp main.c && echo \"[+] Compiling. Initializing GDB...\" && gdbserver 0.0.0.0:1234 ./xtcp'"
+      bash -c "make clean && make && echo '[+] Build successful.' && iptables -A OUTPUT -p tcp --tcp-flags RST RST -s 172.16.241.1 -j DROP && echo '[+] Kernel RST suppressed.' && ./xtcp"
